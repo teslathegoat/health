@@ -102,8 +102,16 @@
             width: 100%;
             padding: 15px 50px 15px 20px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 24px;
             font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-color: #4a9d8f;
         }
         
         .search-box button {
@@ -116,6 +124,13 @@
             color: #4a9d8f;
             font-size: 1.2rem;
             cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: #f0f9f7;
         }
         
         /* Category Section */
@@ -497,6 +512,165 @@
             font-size: 0.9rem;
         }
         
+        /* AI Search Results Modal */
+        .ai-search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .ai-search-content {
+            background-color: white;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .ai-search-header {
+            background-color: #4a9d8f;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ai-search-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .ai-search-header .ai-badge {
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ai-search-header .ai-badge i {
+            margin-right: 5px;
+        }
+        
+        .ai-search-body {
+            padding: 30px 40px;
+        }
+        
+        .ai-search-query {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .ai-search-response {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #4a9d8f;
+        }
+        
+        .ai-search-response h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .ai-search-response p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .ai-search-response ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .ai-search-response li {
+            margin-bottom: 10px;
+        }
+        
+        .ai-search-sources {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .ai-search-sources h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .ai-search-sources ul {
+            list-style: none;
+        }
+        
+        .ai-search-sources li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .ai-search-sources li::before {
+            content: "•";
+            color: #4a9d8f;
+            position: absolute;
+            left: 0;
+        }
+        
+        .ai-search-sources li a {
+            color: #4a9d8f;
+            text-decoration: none;
+        }
+        
+        .ai-search-sources li a:hover {
+            text-decoration: underline;
+        }
+        
+        .ai-search-related {
+            margin-top: 30px;
+        }
+        
+        .ai-search-related h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .related-searches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .related-search {
+            background-color: #f0f9f7;
+            color: #4a9d8f;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .related-search:hover {
+            background-color: #4a9d8f;
+            color: white;
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .hero h1 {
@@ -560,6 +734,22 @@
             .blog-detail-content {
                 padding: 30px 20px;
             }
+            
+            .ai-search-content {
+                margin: 20px;
+            }
+            
+            .ai-search-header {
+                padding: 15px 20px;
+            }
+            
+            .ai-search-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .ai-search-body {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -586,8 +776,8 @@
             <h1>Your Trusted Source for Health Information</h1>
             <p>AI-powered reviews and insights on doctors, health insurance, and wellness topics to help you make informed decisions.</p>
             <div class="search-box">
-                <input type="text" placeholder="Search for health topics, doctors, or insurance plans...">
-                <button type="submit"><i class="fas fa-search"></i></button>
+                <input type="text" id="searchInput" placeholder="Search for health topics, doctors, or insurance plans...">
+                <button type="submit" id="searchButton"><i class="fas fa-search"></i></button>
             </div>
         </div>
     </section>
@@ -699,6 +889,36 @@
             </div>
             <div class="blog-detail-content" id="modalContent">
                 <!-- Blog content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Search Results Modal -->
+    <div class="ai-search-modal" id="aiSearchModal">
+        <div class="ai-search-content">
+            <div class="ai-search-header">
+                <h2>AI Health Assistant</h2>
+                <div class="ai-badge">
+                    <i class="fas fa-robot"></i> Powered by AI
+                </div>
+            </div>
+            <div class="ai-search-body">
+                <div class="ai-search-query" id="aiSearchQuery"></div>
+                <div class="ai-search-response" id="aiSearchResponse">
+                    <!-- AI response will be inserted here -->
+                </div>
+                <div class="ai-search-sources">
+                    <h4>Sources</h4>
+                    <ul id="aiSearchSources">
+                        <!-- Sources will be inserted here -->
+                    </ul>
+                </div>
+                <div class="ai-search-related">
+                    <h4>Related Searches</h4>
+                    <div class="related-searches" id="relatedSearches">
+                        <!-- Related searches will be inserted here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1459,6 +1679,136 @@
             }
         ];
 
+        // AI responses for different search queries
+        const aiResponses = {
+            "doctor": {
+                title: "Finding the Right Doctor",
+                response: `
+                    <h3>Finding the right doctor is essential for your healthcare journey</h3>
+                    <p>When searching for a doctor, consider these important factors:</p>
+                    <ul>
+                        <li><strong>Specialty:</strong> Different doctors specialize in different areas of medicine. Primary care physicians serve as your first point of contact, while specialists focus on specific conditions or body systems.</li>
+                        <li><strong>Experience:</strong> Look for doctors with experience in treating conditions similar to yours. Board certification indicates that a doctor has met specific standards in their specialty.</li>
+                        <li><strong>Communication Style:</strong> A good doctor-patient relationship depends on effective communication. Consider whether you prefer a doctor who is direct and to-the-point or one who takes time to explain things in detail.</li>
+                        <li><strong>Location and Availability:</strong> Choose a doctor whose office is conveniently located and who offers appointment times that fit your schedule.</li>
+                        <li><strong>Insurance Coverage:</strong> Make sure the doctor accepts your health insurance plan to avoid unexpected costs.</li>
+                    </ul>
+                    <p>Our AI-powered doctor reviews can help you make an informed decision by analyzing patient feedback, credentials, and other important factors.</p>
+                `,
+                sources: [
+                    "American Medical Association",
+                    "Healthgrades Doctor Reviews",
+                    "Centers for Medicare & Medicaid Services"
+                ],
+                relatedSearches: ["Primary care physician", "Specialist near me", "Doctor reviews", "Board certification"]
+            },
+            "insurance": {
+                title: "Understanding Health Insurance",
+                response: `
+                    <h3>Health insurance helps protect you from high medical costs</h3>
+                    <p>When searching for health insurance information, consider these key aspects:</p>
+                    <ul>
+                        <li><strong>Plan Types:</strong> Health Maintenance Organizations (HMOs), Preferred Provider Organizations (PPOs), Exclusive Provider Organizations (EPOs), and Point of Service (POS) plans each have different networks and rules.</li>
+                        <li><strong>Premiums:</strong> This is the amount you pay for your insurance every month. Lower premiums often mean higher out-of-pocket costs when you need care.</li>
+                        <li><strong>Deductibles:</strong> The amount you pay for covered services before your insurance starts to pay. Higher deductibles usually mean lower monthly premiums.</li>
+                        <li><strong>Co-payments and Co-insurance:</strong> These are the amounts you pay for services after you meet your deductible. Co-payments are fixed amounts, while co-insurance is a percentage of the cost.</li>
+                        <li><strong>Out-of-Pocket Maximum:</strong> The most you'll pay during a policy period. After reaching this amount, your insurance pays 100% of covered benefits.</li>
+                    </ul>
+                    <p>Our AI tools can help you compare different plans based on your specific health needs and budget to find the best coverage for you.</p>
+                `,
+                sources: [
+                    "HealthCare.gov",
+                    "National Association of Insurance Commissioners",
+                    "Kaiser Family Foundation"
+                ],
+                relatedSearches: ["Health insurance plans", "Insurance premiums", "Deductible vs co-pay", "Out-of-pocket maximum"]
+            },
+            "mental health": {
+                title: "Mental Health and Wellness",
+                response: `
+                    <h3>Mental health is just as important as physical health</h3>
+                    <p>When searching for mental health information, consider these important aspects:</p>
+                    <ul>
+                        <li><strong>Common Conditions:</strong> Anxiety disorders, depression, bipolar disorder, schizophrenia, and eating disorders are among the most common mental health conditions.</li>
+                        <li><strong>Treatment Options:</strong> Treatment may include psychotherapy, medication, or a combination of both. The right treatment depends on the specific condition and individual needs.</li>
+                        <li><strong>Finding Help:</strong> Mental health professionals include psychiatrists, psychologists, psychiatric nurses, social workers, and counselors. Each has different training and approaches.</li>
+                        <li><strong>Self-Care:</strong> Regular exercise, adequate sleep, healthy eating, stress management, and social connections all contribute to good mental health.</li>
+                        <li><strong>Breaking Stigma:</strong> Mental health conditions are common and treatable. Seeking help is a sign of strength, not weakness.</li>
+                    </ul>
+                    <p>Our AI-powered resources can help you understand symptoms, find qualified professionals, and learn about evidence-based treatments.</p>
+                `,
+                sources: [
+                    "National Institute of Mental Health",
+                    "American Psychological Association",
+                    "National Alliance on Mental Illness"
+                ],
+                relatedSearches: ["Therapy near me", "Mental health symptoms", "Self-care strategies", "Mental health support groups"]
+            },
+            "nutrition": {
+                title: "Nutrition and Healthy Eating",
+                response: `
+                    <h3>Good nutrition is the foundation of good health</h3>
+                    <p>When searching for nutrition information, consider these important aspects:</p>
+                    <ul>
+                        <li><strong>Balanced Diet:</strong> A healthy diet includes a variety of foods from all food groups: fruits, vegetables, grains, protein, and dairy or fortified alternatives.</li>
+                        <li><strong>Macronutrients:</strong> Carbohydrates provide energy, proteins build and repair tissues, and fats support cell function and nutrient absorption.</li>
+                        <li><strong>Micronutrients:</strong> Vitamins and minerals are essential for various bodily functions. Eating a variety of foods helps ensure you get all necessary nutrients.</li>
+                        <li><strong>Special Diets:</strong> Vegetarian, vegan, gluten-free, and other special diets require careful planning to ensure nutritional needs are met.</li>
+                        <li><strong>Hydration:</strong> Water is essential for nearly every bodily function. Most people need about 8 glasses (64 ounces) of water daily.</li>
+                    </ul>
+                    <p>Our AI-powered nutrition tools can help you create personalized eating plans based on your health goals, dietary restrictions, and preferences.</p>
+                `,
+                sources: [
+                    "Academy of Nutrition and Dietetics",
+                    "U.S. Department of Agriculture",
+                    "World Health Organization"
+                ],
+                relatedSearches: ["Healthy meal plans", "Nutritional guidelines", "Vitamin supplements", "Special diets"]
+            },
+            "exercise": {
+                title: "Exercise and Physical Activity",
+                response: `
+                    <h3>Regular physical activity is essential for good health</h3>
+                    <p>When searching for exercise information, consider these important aspects:</p>
+                    <ul>
+                        <li><strong>Types of Exercise:</strong> Aerobic exercise (cardio) improves heart health, strength training builds muscle, and flexibility exercises enhance range of motion.</li>
+                        <li><strong>Recommended Amount:</strong> Adults should aim for at least 150 minutes of moderate-intensity aerobic activity or 75 minutes of vigorous activity per week, plus muscle-strengthening activities on 2 or more days.</li>
+                        <li><strong>Getting Started:</strong> If you're new to exercise, start slowly and gradually increase intensity and duration. Always consult with a healthcare provider before beginning a new exercise program.</li>
+                        <li><strong>Staying Motivated:</strong> Find activities you enjoy, set realistic goals, track your progress, and consider exercising with a friend or group for accountability.</li>
+                        <li><strong>Safety:</strong> Use proper form, warm up before exercising, cool down afterward, and listen to your body to avoid injury.</li>
+                    </ul>
+                    <p>Our AI-powered fitness tools can help you create personalized exercise plans based on your fitness level, health conditions, and goals.</p>
+                `,
+                sources: [
+                    "American College of Sports Medicine",
+                    "Centers for Disease Control and Prevention",
+                    "American Heart Association"
+                ],
+                relatedSearches: ["Beginner workout plans", "Home exercises", "Strength training", "Cardio workouts"]
+            },
+            "preventive care": {
+                title: "Preventive Healthcare",
+                response: `
+                    <h3>Preventive care helps detect health issues early</h3>
+                    <p>When searching for preventive care information, consider these important aspects:</p>
+                    <ul>
+                        <li><strong>Screenings:</strong> Regular health screenings can detect conditions early when they're most treatable. Common screenings include blood pressure, cholesterol, cancer, and diabetes.</li>
+                        <li><strong>Vaccinations:</strong> Vaccines protect against various diseases. Stay up-to-date on recommended vaccines for your age and health status.</li>
+                        <li><strong>Check-ups:</strong> Regular physical exams allow your doctor to monitor your overall health and address any concerns.</li>
+                        <li><strong>Age-Specific Care:</strong> Preventive needs change throughout life. Children, adults, and older adults have different recommended screenings and vaccinations.</li>
+                        <li><strong>Lifestyle Factors:</strong> Healthy eating, regular exercise, not smoking, limiting alcohol, and managing stress all contribute to preventing disease.</li>
+                    </ul>
+                    <p>Our AI-powered preventive care tools can help you track recommended screenings, vaccinations, and healthy habits based on your age and risk factors.</p>
+                `,
+                sources: [
+                    "U.S. Preventive Services Task Force",
+                    "Centers for Disease Control and Prevention",
+                    "American Academy of Family Physicians"
+                ],
+                relatedSearches: ["Health screenings by age", "Vaccination schedule", "Annual check-up", "Preventive health guidelines"]
+            }
+        };
+
         // Function to render blog posts
         function renderBlogs(blogs) {
             const blogGrid = document.getElementById('blogGrid');
@@ -1505,6 +1855,12 @@
             document.body.style.overflow = 'auto'; // Re-enable scrolling
         }
 
+        // Function to close AI search modal
+        function closeAiSearchModal() {
+            document.getElementById('aiSearchModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
         // Function to filter blogs by category
         function filterBlogs(category) {
             if (category === 'all') {
@@ -1531,20 +1887,101 @@
             alert("Thank you for subscribing! Please check your email to complete the subscription process.");
         }
 
+        // Function to handle AI search
+        function handleAiSearch(query) {
+            // Convert query to lowercase for easier matching
+            const lowerQuery = query.toLowerCase();
+            
+            // Find relevant AI response based on keywords
+            let response = null;
+            
+            for (const [keyword, data] of Object.entries(aiResponses)) {
+                if (lowerQuery.includes(keyword)) {
+                    response = data;
+                    break;
+                }
+            }
+            
+            // If no specific keyword match, provide a general response
+            if (!response) {
+                response = {
+                    title: "Health Information",
+                    response: `
+                        <h3>Comprehensive Health Information</h3>
+                        <p>I found information related to your search query: "${query}". Here's what you should know:</p>
+                        <ul>
+                            <li><strong>Personalized Care:</strong> Health needs vary from person to person. Consider your age, gender, existing conditions, and family history when evaluating health information.</li>
+                            <li><strong>Evidence-Based Information:</strong> Look for information from reputable sources like medical associations, government health agencies, and peer-reviewed journals.</li>
+                            <li><strong>Professional Consultation:</strong> While online information is helpful, it's not a substitute for professional medical advice. Always consult with healthcare providers for personal health concerns.</li>
+                            <li><strong>Preventive Care:</strong> Many health issues can be prevented or managed through regular check-ups, screenings, and healthy lifestyle choices.</li>
+                            <li><strong>Mental Health:</strong> Remember that mental health is an essential part of overall health. Don't hesitate to seek help for mental health concerns.</li>
+                        </ul>
+                        <p>Our AI-powered health assistant can provide more specific information. Try searching with more specific terms like "doctor," "insurance," "mental health," "nutrition," "exercise," or "preventive care."</p>
+                    `,
+                    sources: [
+                        "World Health Organization",
+                        "Centers for Disease Control and Prevention",
+                        "National Institutes of Health"
+                    ],
+                    relatedSearches: ["Health tips", "Medical advice", "Wellness strategies", "Healthcare information"]
+                };
+            }
+            
+            // Display the AI response
+            document.getElementById('aiSearchQuery').textContent = `You searched for: "${query}"`;
+            document.getElementById('aiSearchResponse').innerHTML = response.response;
+            
+            // Display sources
+            const sourcesList = document.getElementById('aiSearchSources');
+            sourcesList.innerHTML = '';
+            response.sources.forEach(source => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#">${source}</a>`;
+                sourcesList.appendChild(li);
+            });
+            
+            // Display related searches
+            const relatedSearchesContainer = document.getElementById('relatedSearches');
+            relatedSearchesContainer.innerHTML = '';
+            response.relatedSearches.forEach(search => {
+                const div = document.createElement('div');
+                div.className = 'related-search';
+                div.textContent = search;
+                div.onclick = function() {
+                    document.getElementById('searchInput').value = search;
+                    handleAiSearch(search);
+                };
+                relatedSearchesContainer.appendChild(div);
+            });
+            
+            // Show the modal
+            document.getElementById('aiSearchModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             renderBlogs(blogPosts);
             
             // Close modal when clicking outside of it
             window.onclick = function(event) {
-                const modal = document.getElementById('blogModal');
-                if (event.target === modal) {
+                const blogModal = document.getElementById('blogModal');
+                const aiSearchModal = document.getElementById('aiSearchModal');
+                
+                if (event.target === blogModal) {
                     closeModal();
+                }
+                
+                if (event.target === aiSearchModal) {
+                    closeAiSearchModal();
                 }
             }
             
             // Close modal with close button
             document.querySelector('.close-modal').addEventListener('click', closeModal);
+            
+            // Close AI search modal with close button
+            document.querySelector('.ai-search-header .close-modal')?.addEventListener('click', closeAiSearchModal);
             
             // Newsletter form submission
             document.getElementById('newsletterForm').addEventListener('submit', function(e) {
@@ -1552,6 +1989,24 @@
                 const email = document.getElementById('newsletterEmail').value;
                 handleNewsletterSubscription(email);
                 this.reset();
+            });
+            
+            // Search functionality
+            document.getElementById('searchButton').addEventListener('click', function() {
+                const query = document.getElementById('searchInput').value.trim();
+                if (query) {
+                    handleAiSearch(query);
+                }
+            });
+            
+            // Search on Enter key press
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        handleAiSearch(query);
+                    }
+                }
             });
         });
     </script>
